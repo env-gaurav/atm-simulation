@@ -2,9 +2,14 @@ total_balance = 0.0
 pin = 1111
 attempts = 2
 
-def validatePin(user_pin):
+def pinGenerate(newPin,re_newPin):
+    if newPin == re_newPin:
+        return True
+    return False
+
+def validatePin(p):
     global pin
-    if pin == user_pin:
+    if pin == p:
         return True
     return False
 
@@ -36,11 +41,11 @@ atm=f'''
 {"-"*30}
 '''
 while True:
-    user_pin= int(input("ENTER PIN: "))
+    user_pin = int(input("Enter Pin: "))
     if not validatePin(user_pin):
-        print(f" INCORRECT PIN {attempts} ATTEMPTS LEFT")
+        print(f"INCORRECT PIN, {attempts} ATTEMPTS LEFT")
         if attempts == 0:
-            print("THANK YOU FOR USING ATM")
+            print("Thank You for using ATM")
             break
         else:
             attempts -= 1
@@ -53,7 +58,26 @@ while True:
                 print("Thank You for using ATM")
                 break
             if user_choice == 1:
-                print("PIN GEN")
+                oldPin = int(input("ENTER CURRENT PIN: "))
+                if validatePin(oldPin):
+                    newPin=int(input("ENTER NEW PIN: "))
+                    while True:
+                        re_newPin=int(input("ENTER RE NEW PIN:  "))
+                        if newPin==re_newPin:
+                            pin = newPin
+                            print("NEW PIN GENERATED")
+                            break
+                        else:
+                            print("INCORRECT PIN")
+                            continue
+                else:
+                    if attempts==0:
+                        print("MAXIMUM LIMIT EXCEEDED")
+                        print("THANK YOU FOR USING ATM")
+                        break
+                    else:
+                        attempts -= 1
+                        print("INCORRECT PIN")
             elif user_choice == 2:
                 cd = float(input("ENTER AMOUNT: "))
                 addBalance(cd)

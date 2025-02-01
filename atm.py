@@ -8,8 +8,9 @@ def pinGenerate(newPin,re_newPin):
     return False
 
 def validatePin(p):
-    global pin
+    global pin, attempts
     if pin == p:
+        attempts = 2
         return True
     return False
 
